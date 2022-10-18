@@ -1,3 +1,7 @@
+import processor.Processor;
+import processor.ProcessorsLoadBalancer;
+import task.Task;
+
 import java.io.*;
 import java.util.Arrays;
 

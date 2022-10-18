@@ -1,3 +1,6 @@
+import processor.ProcessorsLoadBalancer;
+import task.Task;
+
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Scheduler implements Runnable {
@@ -14,7 +17,7 @@ public class Scheduler implements Runnable {
 
     public void addTask(Task task){
         System.out.println("                                               " +
-                "**** Task " + task.getId()
+                "**** task.Task " + task.getId()
                 + " added to the queue ****");
         taskQueue.add(task);
     }
