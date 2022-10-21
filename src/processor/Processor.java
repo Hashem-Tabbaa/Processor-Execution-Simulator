@@ -8,7 +8,6 @@ public class Processor implements Runnable {
     private final int id;
     private boolean isBusy;
     private Task currentTask;
-    private long currentTaskStartingCycle;
     private long currentTaskRemainingTime;
     private boolean simulationRunning;
 

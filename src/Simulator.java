@@ -25,8 +25,8 @@ public class Simulator implements Runnable{
         this.clock = new Clock();
         this.scheduler = new Scheduler(processorsLoadBalancer);
 
-        clock.addLock(scheduler);
         clock.addLock(this);
+//        clock.addLock(scheduler);
     }
 
     @Override
@@ -52,6 +52,9 @@ public class Simulator implements Runnable{
                     while(clock.getCurrentCycle() != task.getCreationTime())
                         this.wait();
                     scheduler.addTask(task);
+                }
+                synchronized (scheduler){
+                    scheduler.notify();
                 }
             }
         } catch (IOException e) {

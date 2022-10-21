@@ -22,21 +22,26 @@ public class Scheduler implements Runnable {
         taskQueue.add(task);
     }
 
-    private boolean flag = false;
     @Override
     public void run() {
         simulationRunning = true;
         while(simulationRunning){
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            synchronized (this){
+                try{
+                    this.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if(taskQueue.isEmpty())
+                    continue;
+                Task task = taskQueue.peek();
+                while(processorsLoadBalancer.assignTask(task)){
+                    taskQueue.poll();
+                    if(taskQueue.isEmpty())
+                        break;
+                    task = taskQueue.peek();
+                }
             }
-            if(taskQueue.isEmpty())
-                continue;
-            Task task = taskQueue.poll();
-            if(!processorsLoadBalancer.assignTask(task))
-                taskQueue.add(task);
         }
     }
 
